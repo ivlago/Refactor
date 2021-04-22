@@ -25,6 +25,13 @@ public class CustomerTest {
 	}
 
 	@Test
+	public void withoutRentalsTestCharge() {
+		String customerName = "customerName";
+		Customer customer = new CustomerBuilder().name(customerName).build();
+		assertEquals(0.0, customer.getTotalCharge(), 0);
+	}
+
+	@Test
 	public void regularRental1DayTest() {
 		String movieName = "movieName";
 		Movie movie = new MovieBuilder().title(movieName).regular().build();
@@ -46,6 +53,14 @@ public class CustomerTest {
 		Customer customer = new CustomerBuilder().name("customerName").rental(rental).build();
 
 		assertEquals(1, customer.getTotalFrequentRenterPoints());
+	}
+
+	@Test
+	public void regularRental1DayTestCharge() {
+		Movie movie = new MovieBuilder().title("movieName").regular().build();
+		Rental rental = new RentalBuilder().movie(movie).daysRented(1).build();
+		Customer customer = new CustomerBuilder().name("customerName").rental(rental).build();
+		assertEquals(2.0, customer.getTotalCharge(), 0);
 	}
 	
 	@Test
@@ -109,6 +124,14 @@ public class CustomerTest {
 	}
 
 	@Test
+	public void newReleaseRental2DayTestCarge() {
+		Movie movie = new MovieBuilder().title("movieName").newRelease().build();
+		Rental rental = new RentalBuilder().movie(movie).daysRented(2).build();
+		Customer customer = new CustomerBuilder().name("customerName").rental(rental).build();
+		assertEquals(3.0, customer.getTotalCharge(), 0);
+	}
+
+	@Test
 	public void newReleaseRentalTestFrequent2() {
 		Movie movie = new MovieBuilder().title("movieName").newRelease().build();
 		Rental rental = new RentalBuilder().movie(movie).daysRented(2).build();
@@ -162,6 +185,14 @@ public class CustomerTest {
 		assertEquals(result, statement);
 	}
 	
+	@Test
+	public void childrensRental3DayTestChange() {
+		Movie movie = new MovieBuilder().title("movieName").childrens().build();
+		Rental rental = new RentalBuilder().movie(movie).daysRented(3).build();
+		Customer customer = new CustomerBuilder().name("customerName").rental(rental).build();
+		assertEquals(1.5, customer.getTotalCharge(), 0);
+	}
+
 	@Test
 	public void childrensRental4DayTest() {
 		String movieName = "movieName";
